@@ -18,6 +18,11 @@ export const getTasksService = async (userId) => {
   return tasks;
 };
 
+export const getTaskByIdService = async (userId, taskId) => {
+  const task = await Task.findOne({ _id: taskId, user: userId });
+  return task;
+};
+
 export const updateTaskService = async (userId, taskId, updateData) => {
   const task = await Task.findOneAndUpdate(
     { _id: taskId, user: userId },

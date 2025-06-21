@@ -2,7 +2,8 @@ import {
   createTaskService,
   getTasksService,
   updateTaskService,
-  deleteTaskService
+  deleteTaskService,
+  getTaskByIdService
 } from '../services/taskService.js';
 
 export const createTask = async (req, res) => {
@@ -24,6 +25,17 @@ export const getTasks = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+export const getTaskById = async (req, res) => {
+  try {
+    const task = await getTaskByIdService(req.user.id, req.params.id);
+    if (!task) return res.status(404).json({ message: 'Task not found' });
+    res.json(task);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
 
 export const updateTask = async (req, res) => {
   try {
