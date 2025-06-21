@@ -1,7 +1,15 @@
-import Task from '../models/Task.js';
+import Task from "../models/Task.js";
 
-export const createTaskService = async (userId, { title, description }) => {
-  const task = await Task.create({ title, description, user: userId });
+export const createTaskService = async (userId, data) => {
+  const { title, description, endDate, status, category } = data;
+  const task = await Task.create({
+    title,
+    description,
+    endDate: new Date(endDate),
+    status: status || "Ongoing",
+    category: category || "Other",
+    user: userId,
+  });
   return task;
 };
 
